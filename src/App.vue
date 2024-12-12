@@ -1,90 +1,45 @@
-<template>
-  <div id="app">
-    <Sidebar />
-    <section id="interface">
-      <Navbar />
-      <h3 class="i-name"></h3>
-      <UserStats @openAddUserPopup="openAddUserModal" />
-      <UserTable @openEditUserPopup="openEditUserModal" />
-      <EditUserModal 
-      :user="selectedUser"
-      :isVisible="isEditUserModalVisible"
-      @closeModal="closeEditUserModal"
-      @saveChanges="handleSaveChanges"
-      />
-      <AddUserModal 
-      v-if="isAddUserModalVisible"
-      :isAddUserModalVisible="isAddUserModalVisible"
-      @closeModal="closeAddUserModal"
-      @addUser="handleAddUser"
-      />
-    </section>
-  </div>
-</template>
+<script setup lang="ts">
+import Sidebar from '@/components/Sidebar.vue';
+import Navbar from '@/components/Navbar.vue';
+import UserStats from '@/components/UserStats.vue';
+import UserTable from '@/components/UserTable.vue';
+import EditUserModal from '@/components/Modals/EditUserModal.vue';
+import AddUserModal from '@/components/Modals/AddUserModal.vue';
+import { ref } from 'vue';
+import { User } from '@/types/User';
+import { users } from '@/data/users';
 
-<script>
-import Sidebar from './components/Sidebar.vue';
-import Navbar from './components/Navbar.vue';
-import UserStats from './components/UserStats.vue';
-import UserTable from './components/UserTable.vue';
-import EditUserModal from './components/EditUserModal.vue';
-import AddUserModal from './components/AddUserModal.vue';
+const addUser = ref(false)
+const editUser = ref(false)
+const selectedUser = ref({} as User)
 
-export default {
-  components: {
-    Sidebar,
-    Navbar,
-    UserStats,
-    UserTable,
-    EditUserModal,
-    AddUserModal,
-  },
-  data() {
-    return {
-      isAddUserModalVisible: false,
-      isEditUserModalVisible: false,
-      selectedUser: null,
-      isModalVisible: false,
-      
-    };
-  },
-  methods: {
-    openAddUserModal() {
-      console.log('Add User Popup Triggered');
-      this.isAddUserModalVisible = true;
-    },
-    closeAddUserModal() {
-      this.isAddUserModalVisible = false;
-    },
-    openEditUserModal(user) {
-      console.log('Editing user:', user);
-      this.selectedUser = user;
-      this.isEditUserModalVisible = true;
-    },
-    closeEditUserModal() {
-      this.isEditUserModalVisible = false;
-      this.selectedUser = null;
-    },
-    handleAddUser(newUser) {
-      console.log('New user added:', newUser);
-      this.closeAddUserModal();
-    },
-    handleSaveChanges(updatedUser) {
-      console.log('User updated:', updatedUser);
-      this.closeEditUserModal();
-    },
-    closeModal() {
-      this.isModalVisible = false;
-    },
-    saveChanges(updatedUser) {
-      console.log('User saved:', updatedUser);
-      this.isModalVisible = false;
-    },
-  },
-};
+function openEditUserModal(user: User) {
+  console.log('Editing user:', user);
+  selectedUser.value = user;
+  editUser.value = true;
+}
+
 </script>
 
+<template>
+  <Sidebar />
+  <main>
+    <section id="interface" class="content">
+      <Navbar />
+      <h3 class="title">User Management</h3>
+      <UserStats @openAddUserPopup="addUser = true" />
+      <UserTable @openEditUserPopup="openEditUserModal" :users="users" />
+      <EditUserModal v-if="editUser" v-model:visible="editUser" v-bind:user="selectedUser" />
+      <AddUserModal v-if="addUser" v-model:visible="addUser" />
+    </section>
+  </main>
+</template>
+
 <style>
+:root {
+  --sidebar-width: 78px;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -95,15 +50,33 @@ export default {
 body {
   width: 100%;
   background: rgb(223, 222, 222);
-  position: relative;
+}
+</style>
+
+<style scoped>
+main {
+  margin-left: var(--sidebar-width);
+  padding: 0 3em 3em;
+}
+
+.content {
   display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-#interface {
-  width: 100%;
-  margin-left: 100px;
-  position: relative;
+.title {
+  color: #444a53;
+  font-size: 30px;
+  margin-left: 3rem;
+  font-weight: 700;
 }
-
-
+@media screen and (max-width: 768px) {
+  main {
+    padding: 0 1em 1em;
+  }
+  .title {
+    margin-left: 1rem;
+  }
+}
 </style>
