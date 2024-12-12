@@ -71,4 +71,12 @@ main {
   margin-left: 3rem;
   font-weight: 700;
 }
+@media screen and (max-width: 768px) {
+  main {
+    padding: 0 1em 1em;
+  }
+  .title {
+    margin-left: 1rem;
+  }
+}
 </style>

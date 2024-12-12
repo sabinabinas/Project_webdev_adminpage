@@ -60,7 +60,7 @@ function toggleSidebar() {
   position: fixed;
   left: 0;
   top: 0;
-  height: 100dvh;
+  height: 100%;
   width: var(--sidebar-width);
   background: #11101D;
   padding: 6px 14px;

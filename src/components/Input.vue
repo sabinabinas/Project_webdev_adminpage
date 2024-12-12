@@ -40,7 +40,6 @@ const model = defineModel();
         <label>{{ label }} :</label>
         <input :type="props.type" :placeholder="props.placeholder" :disabled="props.disabled" :required="props.required" v-model="model" />
     </div>
-    <!-- <input v-model="model" :id="props.label" :placeholder="props.label" /> -->
 </template>
 
 <style scoped>
@@ -72,9 +71,16 @@ label {
 
 .group {
     width: 30vw;
-    /* padding: 8px; */
-    /* border: 1px solid #ccc; */
     display: flex;
     justify-content: space-evenly;
+}
+
+@media screen and (max-width: 600px) {
+    input[type="text"],input[type="date"],input[type="email"],input[type="password"],input[type="number"] {
+        width: 50vw;
+    }
+    .group {
+        width: 50vw;
+    }
 }
 </style>

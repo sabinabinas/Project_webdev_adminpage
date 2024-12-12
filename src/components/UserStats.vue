@@ -23,7 +23,7 @@
         </div>
       </div>
       <!-- Add New User Button -->
-      <button class="val-box" @click="$emit('openAddUserPopup')">
+      <button class="val-box" @click="$emit('openAddUserPopup')" style="margin: 0%;">
         <i class="bx bx-user-plus"></i>
         <div>
           <h3>Add New User</h3>
@@ -38,9 +38,10 @@
 .values {
   /* padding: 30px 30px 0 30px; */
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
   flex-wrap: wrap;
+  gap: 20px;
 }
 
 .values .val-box {
@@ -93,28 +94,25 @@
 
 button.val-box {
   background: none;
-  /* Remove button background */
   border: none;
-  /* Remove button border */
   cursor: pointer;
-  /* Add pointer cursor */
   display: flex;
-  /* Allow for flex layout */
   align-items: center;
-  /* Align items in the center */
   justify-content: center;
-  /* Center content */
   padding: 10px;
   margin: 5px;
 }
 
 button.val-box:hover {
   background-color: #f1f1f1;
-  /* Optional: Add hover effect */
 }
 
 button.val-box:active {
   transform: scale(0.98);
-  /* Optional: Add click effect */
+}
+@media screen and (max-width: 768px) {
+  .values {
+    flex-direction: column;
+  }
 }
 </style>

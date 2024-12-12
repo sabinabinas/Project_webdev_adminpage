@@ -103,6 +103,16 @@ button:active {
     }
 }
 
+@media screen and (max-width: 600px) {
+    .modal-content {
+        position: fixed;
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 85dvw;
+    }
+}
+
 .form-group {
     display: flex;
     flex-direction: column;
